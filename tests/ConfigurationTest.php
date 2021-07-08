@@ -20,4 +20,11 @@ final class ConfigurationTest extends TestCase
             'pasv' => true
         ]);
     }
+
+    public function testConfigurationSingleton()
+    {
+        $configuration = Configuration::getInstance();
+        $this->assertInstanceOf(Configuration::class, $configuration);
+        $this->assertSame($configuration, Configuration::getInstance());
+    }
 }

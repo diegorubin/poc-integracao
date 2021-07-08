@@ -4,6 +4,16 @@ namespace Integracao;
 
 class Configuration
 {
+    private static $configuration;
+
+    public static function getInstance()
+    {
+        if (!self::$configuration) {
+            self::$configuration = new Configuration();
+        }
+        return self::$configuration;
+    }
+
     public function get()
     {
         return [

@@ -1,0 +1,6 @@
+<?php
+
+require_once '../vendor/autoload.php';
+
+// $recover = new Integracao\FTPFilesRecover();
+// $recover->execute();

@@ -16,7 +16,7 @@
     "nicolab/php-ftp-client": "^1.6"
   },
   "bin": [
-    "bin/files-recover"
+    "bin/ftp-recover"
   ],
   "require-dev": {
     "phpunit/phpunit": "^9",
