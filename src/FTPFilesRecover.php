@@ -2,7 +2,7 @@
 
 namespace Integracao;
 
-use Integracao\Commands\FilesSender;
+use Integracao\Application\Commands\FilesSender;
 use Integracao\Infrastructure\FTPFilesRepository;
 
 class FTPFilesRecover

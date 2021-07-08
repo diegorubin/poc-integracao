@@ -1,6 +1,6 @@
 <?php
 
-namespace Integracao\Domain;
+namespace Integracao\Domain\Repositories;
 
 interface FilesRepository
 {

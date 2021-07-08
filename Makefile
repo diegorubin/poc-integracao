@@ -1,6 +1,7 @@
 .DEFAULT_GOAL := build
 
 build:
+	rm -rf dist/poc-integracao.phar
 	./vendor/bin/phar-composer build . dist
 
 test:

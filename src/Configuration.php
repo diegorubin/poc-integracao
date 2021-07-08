@@ -5,6 +5,7 @@ namespace Integracao;
 class Configuration
 {
     private static $configuration;
+    private $config;
 
     public static function getInstance()
     {
@@ -14,9 +15,9 @@ class Configuration
         return self::$configuration;
     }
 
-    public function get()
+    public function __construct()
     {
-        return [
+        $this->config = [
             'ftp' => [
                 'host' => $this->env('INTEGRACAO_FTP_HOST', '172.17.0.1'),
                 'user' => $this->env('INTEGRACAO_FTP_USER', 'ftp'),
@@ -24,6 +25,11 @@ class Configuration
                 'pasv' => $this->env('INTEGRACAO_FTP_PASV', 'true', 'bool')
             ]
         ];
+    }
+
+    public function get()
+    {
+        return $this->config;
     }
 
     private function env($varname, $default_value, $vartype = 'string')
