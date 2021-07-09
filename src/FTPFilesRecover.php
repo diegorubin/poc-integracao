@@ -2,6 +2,7 @@
 
 namespace Integracao;
 
+use FtpClient\FtpClient;
 use Integracao\Application\Commands\FilesSender;
 use Integracao\Infrastructure\FTPFilesRepository;
 
@@ -12,7 +13,7 @@ class FTPFilesRecover
     public function __construct()
     {
         // build dependencies
-        $files_repository = new FTPFilesRepository();
+        $files_repository = new FTPFilesRepository(new FtpClient());
 
         $this->files_sender = new FilesSender($files_repository);
     }

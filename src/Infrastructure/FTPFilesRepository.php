@@ -2,32 +2,35 @@
 
 namespace Integracao\Infrastructure;
 
-use FtpClient\FtpClient;
 use Integracao\Configuration;
 use Integracao\Domain\File;
 use Integracao\Domain\Repositories\FilesRepository;
 
 class FTPFilesRepository implements FilesRepository
 {
-    protected $ftp;
+    private $ftp;
+    private $config;
 
-    public function __construct()
+    public function __construct($ftp)
     {
-        $config = Configuration::getInstance()->get()['ftp'];
-        $this->ftp = new FtpClient();
-        $this->ftp->connect($config['host']);
-        $this->ftp->login($config['user'], $config['pass']);
-        $this->ftp->pasv($config['pasv']);
+        $this->config = Configuration::getInstance()->get()['ftp'];
+        $this->ftp = $ftp;
     }
 
     public function fetch()
     {
+        $this->ftp->connect($this->config['host']);
+        $this->ftp->login($this->config['user'], $this->config['pass']);
+        $this->ftp->pasv($this->config['pasv']);
+ 
         $files = [];
         foreach ($this->ftp->scanDir('.', true) as $key => $value) {
             if ($value["type"] == "file") {
                 array_push($files, new File(str_replace("file#", "", $key), "ftp"));
             }
         }
+
+        $this->ftp->close();
 
         return $files;
     }
