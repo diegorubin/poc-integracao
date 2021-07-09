@@ -16,10 +16,9 @@
     "nicolab/php-ftp-client": "^1.6"
   },
   "bin": [
-    "bin/ftp-recover"
+    "bin/integracao"
   ],
   "require-dev": {
-    "phpunit/phpunit": "^9",
-    "clue/phar-composer": "^1.2"
+    "phpunit/phpunit": "^9"
   }
 }

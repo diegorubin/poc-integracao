@@ -1,0 +1,17 @@
+<?php
+
+require_once '../vendor/autoload.php';
+
+if (count($argv) < 2) {
+  print "should give a mode\n";
+  exit(1);
+}
+
+switch ($argv[1]) {
+  case "list-files":
+    $recover = new Integracao\FTPFilesRecover();
+    $recover->run();
+    break;
+  default:
+    print "mode not available\n";
+}

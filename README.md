@@ -6,6 +6,18 @@
 composer install
 ```
 
+## Build And Run
+
+
+```
+# build
+make
+
+# run
+# dist/integracao <mode>
+dist/integracao list-files
+```
+
 ## Run Tests
 
 To run unit tests

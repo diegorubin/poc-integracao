@@ -2,7 +2,7 @@
 
 build:
 	rm -rf dist/poc-integracao.phar
-	./vendor/bin/phar-composer build . dist
+	./phar-composer-1.2.0.phar build . dist/integracao
 
 test:
 	./vendor/bin/phpunit tests --coverage-html coverage
