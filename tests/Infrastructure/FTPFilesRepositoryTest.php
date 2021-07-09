@@ -1,7 +1,6 @@
 <?php
 
 use FtpClient\FtpClient;
-use Integracao\Domain\File;
 use Integracao\Infrastructure\FTPFilesRepository;
 use PHPUnit\Framework\TestCase;
 
@@ -12,7 +11,7 @@ use PHPUnit\Framework\TestCase;
  */
 final class FTPFilesRepositoryTest extends TestCase
 {
-    public function testConstruct()
+    public function testFetch()
     {
         $ftpClientStub = $this->getMockBuilder(FtpClient::class)->disableOriginalConstructor()->getMock();
         $ftpClientStub->method('scanDir')->willReturn(["directory#dir" => ["type" => "directory"], "file#dir/file" => ["type" => "file"]]);

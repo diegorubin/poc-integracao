@@ -23,6 +23,10 @@ class Configuration
                 'user' => $this->env('INTEGRACAO_FTP_USER', 'ftp'),
                 'pass' => $this->env('INTEGRACAO_FTP_PASS', 'ftp'),
                 'pasv' => $this->env('INTEGRACAO_FTP_PASV', 'true', 'bool')
+            ],
+            'redis' => [
+                'host' => $this->env('INTEGRACAO_REDIS_HOST', 'localhost'),
+                'port' => $this->env('INTEGRACAO_REDIS_HOST', '6379'),
             ]
         ];
     }

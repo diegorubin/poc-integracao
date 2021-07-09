@@ -4,17 +4,21 @@ namespace Integracao\Application\Commands;
 
 class FilesSender
 {
-    private $files_repository;
+    private $filesRepository;
+    private $filesReadRepository;
 
-    public function __construct($files_repository)
+    public function __construct($filesRepository, $filesReadRepository)
     {
-        $this->files_repository = $files_repository;
+        $this->filesRepository = $filesRepository;
+        $this->filesReadRepository = $filesReadRepository;
     }
 
     public function execute()
     {
-        foreach ($this->files_repository->fetch() as $file) {
-            var_dump($file);
+        foreach ($this->filesRepository->fetch() as $file) {
+            if (!$this->filesReadRepository->exists($file)) {
+                $this->filesReadRepository->put($file);
+            }
         }
     }
 }

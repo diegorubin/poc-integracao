@@ -12,3 +12,7 @@ services:
       - FTP_USER=ftp
       - FTP_PASS=ftp
       - PASV_ADDRESS=172.17.0.1
+  redis:
+    image: redis
+    ports:
+      - "6379:6379"

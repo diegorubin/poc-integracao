@@ -2,9 +2,11 @@
 
 namespace Integracao;
 
+use Redis;
 use FtpClient\FtpClient;
 use Integracao\Application\Commands\FilesSender;
 use Integracao\Infrastructure\FTPFilesRepository;
+use Integracao\Infrastructure\RedisFilesReadRepository;
 
 class FTPFilesRecover
 {
@@ -13,9 +15,10 @@ class FTPFilesRecover
     public function __construct()
     {
         // build dependencies
-        $files_repository = new FTPFilesRepository(new FtpClient());
+        $filesRepository = new FTPFilesRepository(new FtpClient());
+        $filesReadRepository = new RedisFilesReadRepository(new Redis());
 
-        $this->files_sender = new FilesSender($files_repository);
+        $this->files_sender = new FilesSender($filesRepository, $filesReadRepository);
     }
 
     public function run()

@@ -13,13 +13,18 @@ class File
         $this->source = $source;
     }
 
-    public function getFullpath() :string
+    public function getFullpath(): string
     {
         return $this->fullpath;
     }
 
-    public function getSource() :string
+    public function getSource(): string
     {
         return $this->source;
+    }
+
+    public function attributes(): array
+    {
+        return ["fullpath" => $this->fullpath, "source" => $this->source];
     }
 }
