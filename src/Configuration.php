@@ -22,6 +22,7 @@ class Configuration
                 'applicationName' => $this->env('INTEGRACAO_META_APPLICATION_NAME', 'integracao')
             ],
             'ftp' => [
+                'pollingInterval' => $this->env('INTEGRACAO_FTP_POLLING_INTERVAL', '300', 'int'),
                 'host' => $this->env('INTEGRACAO_FTP_HOST', '172.17.0.1'),
                 'user' => $this->env('INTEGRACAO_FTP_USER', 'ftp'),
                 'pass' => $this->env('INTEGRACAO_FTP_PASS', 'ftp'),
@@ -29,7 +30,7 @@ class Configuration
             ],
             'redis' => [
                 'host' => $this->env('INTEGRACAO_REDIS_HOST', 'localhost'),
-                'port' => $this->env('INTEGRACAO_REDIS_HOST', '6379'),
+                'port' => $this->env('INTEGRACAO_REDIS_HOST', '6379', 'int'),
             ],
             'queues' => [
                 'download' => [
@@ -57,6 +58,10 @@ class Configuration
 
         if ($vartype == 'bool') {
             return $current_value == 'true';
+        }
+
+        if ($vartype == 'int') {
+            return intval($current_value);
         }
 
         return $current_value;

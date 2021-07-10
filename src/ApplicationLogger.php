@@ -16,11 +16,16 @@ class ApplicationLogger
     {
         $this->logger = new Logger(Configuration::getInstance()->get()['meta']['applicationName']);
         
-        $handler = new StreamHandler(STDOUT, Logger::INFO);
         $formatter = new JsonFormatter();
+
+        $handler = new StreamHandler(STDOUT, Logger::INFO);
         $handler->setFormatter($formatter);
 
+        $handlerFile = new StreamHandler('/tmp/application/application.log', Logger::INFO);
+        $handlerFile->setFormatter($formatter);
+
         $this->logger->pushHandler($handler);
+        $this->logger->pushHandler($handlerFile);
     }
 
     public static function getInstance()
@@ -31,8 +36,13 @@ class ApplicationLogger
         return self::$applicationLogger;
     }
 
-    public function info($message)
+    public function info($message, $context=[])
     {
-        $this->logger->info($message);
+        $this->logger->info($message, $context);
+    }
+
+    public function error($message)
+    {
+        $this->logger->error($message);
     }
 }

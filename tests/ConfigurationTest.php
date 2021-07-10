@@ -20,6 +20,7 @@ final class ConfigurationTest extends TestCase
         $ftp_values = $this->configuration->get()['ftp'];
 
         $this->assertEquals($ftp_values, [
+            'pollingInterval' => 300,
             'host' => '172.17.0.1',
             'user' => 'ftp',
             'pass' => 'ftp',

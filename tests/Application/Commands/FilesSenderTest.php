@@ -1,6 +1,7 @@
 <?php
 
 use Integracao\Application\Commands\FilesSender;
+use Integracao\ApplicationLogger;
 use Integracao\Domain\File;
 use Integracao\Domain\Queues\DownloadFileProducer;
 use Integracao\Domain\Repositories\FilesReadRepository;
@@ -17,13 +18,15 @@ final class FilesSenderTest extends TestCase
     private $filesReadRepository;
     private $fileDownloadQueue;
     private $filesSender;
+    private $logger;
 
     protected function setUp(): void
     {
         $this->filesRepository = $this->getMockBuilder(FilesRepository::class)->disableOriginalConstructor()->getMock();
         $this->filesReadRepository = $this->getMockBuilder(FilesReadRepository::class)->disableOriginalConstructor()->getMock();
         $this->fileDownloadQueue = $this->getMockBuilder(DownloadFileProducer::class)->disableOriginalConstructor()->getMock();
-        $this->filesSender = new FilesSender($this->filesRepository, $this->filesReadRepository, $this->fileDownloadQueue);
+        $this->logger = $this->getMockBuilder(ApplicationLogger::class)->disableOriginalConstructor()->getMock();
+        $this->filesSender = new FilesSender($this->filesRepository, $this->filesReadRepository, $this->fileDownloadQueue, $this->logger);
     }
 
     public function testSendFilesNotInCache()
@@ -34,6 +37,10 @@ final class FilesSenderTest extends TestCase
 
         $this->filesReadRepository->expects($this->once())->method('put')->with($file);
         $this->fileDownloadQueue->expects($this->once())->method('publish')->with($file);
+        $this->logger->expects($this->once())->method('info')->with('new file found!', ['file' => [
+            'fullpath' => 'a',
+            'source' => 'b'
+        ]]);
 
         $this->filesSender->execute();
     }
@@ -46,6 +53,7 @@ final class FilesSenderTest extends TestCase
 
         $this->filesReadRepository->expects($this->never())->method('put');
         $this->fileDownloadQueue->expects($this->never())->method('publish');
+        $this->logger->expects($this->never())->method('info');
 
         $this->filesSender->execute();
     }
