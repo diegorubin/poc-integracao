@@ -1,5 +1,4 @@
 <?php
-ini_set('memory_limit', '32M');
 
 require_once '../vendor/autoload.php';
 
@@ -10,6 +9,7 @@ if (count($argv) < 2) {
 
 switch ($argv[1]) {
   case "list-files":
+    Integracao\ApplicationLogger::getInstance()->info("starting list-files mode");
     $recover = new Integracao\FTPFilesRecover();
     $recover->run();
     break;

@@ -52,6 +52,15 @@ final class ConfigurationTest extends TestCase
         ]);
     }
 
+    public function testMetaDefaultValues()
+    {
+        $amqp_values = $this->configuration->get()['meta'];
+
+        $this->assertEquals($amqp_values, [
+            'applicationName' => 'integracao'
+        ]);
+    }
+
     public function testConfigurationSingleton()
     {
         $this->assertInstanceOf(Configuration::class, $this->configuration);

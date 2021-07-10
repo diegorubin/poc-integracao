@@ -1,7 +1,7 @@
 .DEFAULT_GOAL := build
 
 build:
-	rm -rf dist/poc-integracao.phar
+	rm -rf dist/integracao
 	./phar-composer-1.2.0.phar build . dist/integracao
 
 build-image:

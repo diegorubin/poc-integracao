@@ -11,6 +11,7 @@
         </include>
         <exclude>
             <!-- these files will be coverage in component tests (integration tests) -->
+            <file>src/ApplicationLogger.php</file>
             <file>src/FTPFilesRecover.php</file>
         </exclude>
     </coverage>

@@ -18,6 +18,9 @@ class Configuration
     public function __construct()
     {
         $this->config = [
+            'meta' => [
+                'applicationName' => $this->env('INTEGRACAO_META_APPLICATION_NAME', 'integracao')
+            ],
             'ftp' => [
                 'host' => $this->env('INTEGRACAO_FTP_HOST', '172.17.0.1'),
                 'user' => $this->env('INTEGRACAO_FTP_USER', 'ftp'),
