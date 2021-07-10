@@ -27,6 +27,15 @@ class Configuration
             'redis' => [
                 'host' => $this->env('INTEGRACAO_REDIS_HOST', 'localhost'),
                 'port' => $this->env('INTEGRACAO_REDIS_HOST', '6379'),
+            ],
+            'queues' => [
+                'download' => [
+                    'type' => $this->env('INTEGRACAO_DOWNLOAD_QUEUE_TYPE', 'amqp'),
+                    'host' => $this->env('INTEGRACAO_DOWNLOAD_QUEUE_HOST', 'localhost'),
+                    'port' => $this->env('INTEGRACAO_DOWNLOAD_QUEUE_PORT', '5672'),
+                    'user' => $this->env('INTEGRACAO_DOWNLOAD_QUEUE_USER', 'guest'),
+                    'pass' => $this->env('INTEGRACAO_DOWNLOAD_QUEUE_PASS', 'guest')
+                ]
             ]
         ];
     }

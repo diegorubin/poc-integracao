@@ -13,7 +13,9 @@
     }
   ],
   "require": {
-    "nicolab/php-ftp-client": "^1.6"
+    "nicolab/php-ftp-client": "^1.6",
+    "php-amqplib/php-amqplib": ">=3.0",
+    "aws/aws-sdk-php": "^3.185"
   },
   "bin": [
     "bin/integracao"

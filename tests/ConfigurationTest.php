@@ -37,6 +37,21 @@ final class ConfigurationTest extends TestCase
         ]);
     }
 
+    public function testAMQPDefaultValues()
+    {
+        $amqp_values = $this->configuration->get()['queues'];
+
+        $this->assertEquals($amqp_values, [
+            'download' => [
+                'type' => 'amqp',
+                'host' => 'localhost',
+                'port' => '5672',
+                'user' => 'guest',
+                'pass' => 'guest'
+            ]
+        ]);
+    }
+
     public function testConfigurationSingleton()
     {
         $this->assertInstanceOf(Configuration::class, $this->configuration);
