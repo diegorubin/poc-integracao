@@ -10,6 +10,7 @@ class AMQPDownloadFileConsumer implements DownloadFileConsumer
 {
     private $ampqServerConnection;
     private $channel;
+    private $config;
 
     public function __construct($ampqServerConnection)
     {
@@ -29,7 +30,7 @@ class AMQPDownloadFileConsumer implements DownloadFileConsumer
             $callback($file);
         };
 
-        $this->channel->basic_consume('download.ftp', '', false, true, false, false, $consume);
+        $this->channel->basic_consume($this->config["queueName"], '', false, true, false, false, $consume);
         while ($this->channel->is_open()) {
             $this->channel->wait();
         }

@@ -43,6 +43,7 @@ class FTPFilesRecover
     {
         while (1) {
             try {
+                $this->logger->info("executing ftp list!", ["source" => $this->config['meta']['applicationName']]);
                 $this->files_sender->execute();
             } catch (Exception $e) {
                 $this->logger->error("exception in ftp polling: ". $e->getMessage());

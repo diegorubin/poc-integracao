@@ -34,8 +34,8 @@ class Configuration
             ],
             's3' => [
                 'endpoint' => $this->env('INTEGRACAO_S3_ENDPOINT', 'localhost:9000'),
-                'key' => $this->env('INTEGRACAO_REDIS_KEY', 'minioadmin'),
-                'secret' => $this->env('INTEGRACAO_REDIS_SECRET', 'minioadmin')
+                'key' => $this->env('INTEGRACAO_S3_KEY', 'minioadmin'),
+                'secret' => $this->env('INTEGRACAO_S3_SECRET', 'minioadmin')
             ],
             'queues' => [
                 'download' => [
