@@ -13,6 +13,7 @@ class Message
 /**
  * @covers Integracao\Infrastructure\AMQPDownloadFileConsumer
  * @covers Integracao\Domain\File
+ * @covers Integracao\Configuration
  * @covers AMQPDownloadFileConsumerTest::testConsumer
  */
 final class AMQPDownloadFileConsumerTest extends TestCase
@@ -24,9 +25,9 @@ final class AMQPDownloadFileConsumerTest extends TestCase
 
         $amqpConnectionStub->method('channel')->willReturn($channelStub);
 
-        $channelStub->expects($this->once())->method('queue_declare')->with('ftp.files.download', false, true, false, false);
-        $channelStub->expects($this->once())->method('queue_bind')->with('ftp.files.download', 'integracao.files.download', 'ftp');
-        $channelStub->expects($this->once())->method('basic_consume')->with('ftp.files.download', '', false, true, false, false, $this->captureArg($consumerCallback));
+        $channelStub->expects($this->once())->method('queue_declare')->with('download.ftp', false, true, false, false);
+        $channelStub->expects($this->once())->method('queue_bind')->with('download.ftp', 'integracao.files.download', 'integracao');
+        $channelStub->expects($this->once())->method('basic_consume')->with('download.ftp', '', false, true, false, false, $this->captureArg($consumerCallback));
 
         $amqpDownloadFileProducer = new AMQPDownloadFileConsumer($amqpConnectionStub);
 

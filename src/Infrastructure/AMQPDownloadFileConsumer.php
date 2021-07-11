@@ -2,6 +2,7 @@
 
 namespace Integracao\Infrastructure;
 
+use Integracao\Configuration;
 use Integracao\Domain\File;
 use Integracao\Domain\Queues\DownloadFileConsumer;
 
@@ -15,9 +16,11 @@ class AMQPDownloadFileConsumer implements DownloadFileConsumer
         $this->ampqServerConnection = $ampqServerConnection;
         $this->channel = $this->ampqServerConnection->channel();
 
-        // TODO move exchange name and queue name to configuration
-        $this->channel->queue_declare('ftp.files.download', false, true, false, false);
-        $this->channel->queue_bind('ftp.files.download', 'integracao.files.download', 'ftp');
+        $this->config = Configuration::getInstance()->get()["queues"]["download"];
+
+        // TODO move exchange name to configuration
+        $this->channel->queue_declare($this->config["queueName"], false, true, false, false);
+        $this->channel->queue_bind($this->config["queueName"], 'integracao.files.download', $this->config["routingKey"]);
     }
     public function incoming($callback)
     {
@@ -26,7 +29,7 @@ class AMQPDownloadFileConsumer implements DownloadFileConsumer
             $callback($file);
         };
 
-        $this->channel->basic_consume('ftp.files.download', '', false, true, false, false, $consume);
+        $this->channel->basic_consume('download.ftp', '', false, true, false, false, $consume);
         while ($this->channel->is_open()) {
             $this->channel->wait();
         }

@@ -10,6 +10,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * @covers Integracao\Infrastructure\AMQPDownloadFileProducer
  * @covers Integracao\Domain\File
+ * @covers Integracao\Configuration
  */
 final class AMQPDownloadFileProducerTest extends TestCase
 {
@@ -21,7 +22,7 @@ final class AMQPDownloadFileProducerTest extends TestCase
         $amqpConnectionStub->method('channel')->willReturn($channelStub);
 
         $channelStub->expects($this->once())->method('exchange_declare')->with('integracao.files.download', 'direct', false, true);
-        $channelStub->expects($this->once())->method('basic_publish')->with($this->isInstanceOf(AMQPMessage::class), 'integracao.files.download', 'ftp');
+        $channelStub->expects($this->once())->method('basic_publish')->with($this->isInstanceOf(AMQPMessage::class), 'integracao.files.download', 'integracao');
 
         $amqpDownloadFileProducer = new AMQPDownloadFileProducer($amqpConnectionStub);
 

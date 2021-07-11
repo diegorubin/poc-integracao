@@ -47,6 +47,8 @@ final class ConfigurationTest extends TestCase
                 'type' => 'amqp',
                 'host' => 'localhost',
                 'port' => '5672',
+                'queueName' => 'download.ftp',
+                'routingKey' => 'integracao',
                 'user' => 'guest',
                 'pass' => 'guest'
             ]

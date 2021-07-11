@@ -42,6 +42,8 @@ class Configuration
                     'type' => $this->env('INTEGRACAO_DOWNLOAD_QUEUE_TYPE', 'amqp'),
                     'host' => $this->env('INTEGRACAO_DOWNLOAD_QUEUE_HOST', 'localhost'),
                     'port' => $this->env('INTEGRACAO_DOWNLOAD_QUEUE_PORT', '5672'),
+                    'queueName' => $this->env('INTEGRACAO_DOWNLOAD_QUEUE_NAME', 'download.ftp'),
+                    'routingKey' => $this->env('INTEGRACAO_DOWNLOAD_QUEUE_ROUTING_KEY', 'integracao'),
                     'user' => $this->env('INTEGRACAO_DOWNLOAD_QUEUE_USER', 'guest'),
                     'pass' => $this->env('INTEGRACAO_DOWNLOAD_QUEUE_PASS', 'guest')
                 ]
