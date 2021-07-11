@@ -32,6 +32,11 @@ class Configuration
                 'host' => $this->env('INTEGRACAO_REDIS_HOST', 'localhost'),
                 'port' => $this->env('INTEGRACAO_REDIS_HOST', '6379', 'int'),
             ],
+            's3' => [
+                'endpoint' => $this->env('INTEGRACAO_S3_ENDPOINT', 'localhost:9000'),
+                'key' => $this->env('INTEGRACAO_REDIS_KEY', 'minioadmin'),
+                'secret' => $this->env('INTEGRACAO_REDIS_SECRET', 'minioadmin')
+            ],
             'queues' => [
                 'download' => [
                     'type' => $this->env('INTEGRACAO_DOWNLOAD_QUEUE_TYPE', 'amqp'),
