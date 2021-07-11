@@ -1,6 +1,6 @@
 <?php
 
-use Integracao\Application\Commands\FilesSender;
+use Integracao\Application\Commands\SendFileToDownloadQueue;
 use Integracao\ApplicationLogger;
 use Integracao\Domain\File;
 use Integracao\Domain\Queues\DownloadFileProducer;
@@ -9,10 +9,10 @@ use Integracao\Domain\Repositories\FilesRepository;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers Integracao\Application\Commands\FilesSender
+ * @covers Integracao\Application\Commands\SendFileToDownloadQueue
  * @covers Integracao\Domain\File
  */
-final class FilesSenderTest extends TestCase
+final class SendFileToDownloadQueueTest extends TestCase
 {
     private $filesRepository;
     private $filesReadRepository;
@@ -26,7 +26,7 @@ final class FilesSenderTest extends TestCase
         $this->filesReadRepository = $this->getMockBuilder(FilesReadRepository::class)->disableOriginalConstructor()->getMock();
         $this->fileDownloadQueue = $this->getMockBuilder(DownloadFileProducer::class)->disableOriginalConstructor()->getMock();
         $this->logger = $this->getMockBuilder(ApplicationLogger::class)->disableOriginalConstructor()->getMock();
-        $this->filesSender = new FilesSender($this->filesRepository, $this->filesReadRepository, $this->fileDownloadQueue, $this->logger);
+        $this->filesSender = new SendFileToDownloadQueue($this->filesRepository, $this->filesReadRepository, $this->fileDownloadQueue, $this->logger);
     }
 
     public function testSendFilesNotInCache()

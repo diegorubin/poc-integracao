@@ -13,6 +13,11 @@ class File
         $this->source = $source;
     }
 
+    public static function fromJSON($file)
+    {
+        return new File($file->fullpath, $file->source);
+    }
+
     public function getFullpath(): string
     {
         return $this->fullpath;

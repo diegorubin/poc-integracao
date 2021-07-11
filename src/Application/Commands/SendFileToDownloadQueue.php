@@ -2,7 +2,7 @@
 
 namespace Integracao\Application\Commands;
 
-class FilesSender
+class SendFileToDownloadQueue
 {
     private $filesRepository;
     private $filesReadRepository;

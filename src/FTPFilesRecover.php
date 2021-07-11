@@ -5,8 +5,8 @@ namespace Integracao;
 use Exception;
 use Redis;
 use FtpClient\FtpClient;
+use Integracao\Application\Commands\SendFileToDownloadQueue;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
-use Integracao\Application\Commands\FilesSender;
 use Integracao\Infrastructure\AMQPDownloadFileProducer;
 use Integracao\Infrastructure\FTPFilesRepository;
 use Integracao\Infrastructure\RedisFilesReadRepository;
@@ -36,7 +36,7 @@ class FTPFilesRecover
         // Logger
         $this->logger = ApplicationLogger::getInstance();
 
-        $this->files_sender = new FilesSender($filesRepository, $filesReadRepository, $downloadFileProducer, $this->logger);
+        $this->files_sender = new SendFileToDownloadQueue($filesRepository, $filesReadRepository, $downloadFileProducer, $this->logger);
     }
 
     public function run()

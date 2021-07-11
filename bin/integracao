@@ -13,6 +13,11 @@ switch ($argv[1]) {
     $recover = new Integracao\FTPFilesRecover();
     $recover->run();
     break;
+  case "download-files":
+    Integracao\ApplicationLogger::getInstance()->info("starting download-files mode");
+    $download = new Integracao\FTPDownloadConsumer();
+    $download->run();
+    break;
   default:
     print "mode not available\n";
 }
