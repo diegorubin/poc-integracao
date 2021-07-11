@@ -15,6 +15,6 @@ class ExecuteDownloadFileFromFTP
 
     public function execute(File $file)
     {
-        $this->logger->info("download from ftp finished!", ["file" => json_encode($file->attributes())]);
+        $this->logger->info("download from ftp finished!", ["file" => $file->attributes()]);
     }
 }

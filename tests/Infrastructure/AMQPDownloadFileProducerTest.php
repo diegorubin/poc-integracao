@@ -21,7 +21,7 @@ final class AMQPDownloadFileProducerTest extends TestCase
         $amqpConnectionStub->method('channel')->willReturn($channelStub);
 
         $channelStub->expects($this->once())->method('exchange_declare')->with('integracao.files.download', 'direct', false, true);
-        $channelStub->expects($this->once())->method('basic_publish')->with($this->isInstanceOf(AMQPMessage::class), 'integracao.files.download', '');
+        $channelStub->expects($this->once())->method('basic_publish')->with($this->isInstanceOf(AMQPMessage::class), 'integracao.files.download', 'ftp');
 
         $amqpDownloadFileProducer = new AMQPDownloadFileProducer($amqpConnectionStub);
 
