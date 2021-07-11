@@ -28,7 +28,7 @@ final class FTPFilesRepositoryTest extends TestCase
         $file = $result[0];
         $this->assertEquals(count($result), 1);
         $this->assertEquals("dir/file", $file->getFullpath());
-        $this->assertEquals("ftp", $file->getSource());
+        $this->assertEquals("integracao", $file->getSource());
     }
 
     public function testDownload()

@@ -10,9 +10,11 @@ class FTPFilesRepository implements FilesRepository
 {
     private $ftp;
     private $config;
+    private $applicationName;
 
     public function __construct($ftp)
     {
+        $this->applicationName = Configuration::getInstance()->get()['meta']['applicationName'];
         $this->config = Configuration::getInstance()->get()['ftp'];
         $this->ftp = $ftp;
     }
@@ -24,7 +26,7 @@ class FTPFilesRepository implements FilesRepository
         $files = [];
         foreach ($this->ftp->scanDir('.', true) as $key => $value) {
             if ($value["type"] == "file") {
-                array_push($files, new File(str_replace("file#", "", $key), "ftp"));
+                array_push($files, new File(str_replace("file#", "", $key), $this->applicationName));
             }
         }
 
