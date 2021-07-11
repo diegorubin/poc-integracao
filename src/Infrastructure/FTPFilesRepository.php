@@ -19,10 +19,8 @@ class FTPFilesRepository implements FilesRepository
 
     public function fetch()
     {
-        $this->ftp->connect($this->config['host']);
-        $this->ftp->login($this->config['user'], $this->config['pass']);
-        $this->ftp->pasv($this->config['pasv']);
- 
+        $this->connect();
+
         $files = [];
         foreach ($this->ftp->scanDir('.', true) as $key => $value) {
             if ($value["type"] == "file") {
@@ -30,8 +28,30 @@ class FTPFilesRepository implements FilesRepository
             }
         }
 
-        $this->ftp->close();
+        $this->close();
 
         return $files;
+    }
+
+    public function download(string $fullpath, string $destiny)
+    {
+        $this->connect();
+
+        $this->ftp->get($destiny, $fullpath);
+
+        $this->close();
+    }
+
+    private function connect()
+    {
+        // TODO: check if connected before create a new connection
+        $this->ftp->connect($this->config['host']);
+        $this->ftp->login($this->config['user'], $this->config['pass']);
+        $this->ftp->pasv($this->config['pasv']);
+    }
+
+    private function close()
+    {
+        $this->ftp->close();
     }
 }

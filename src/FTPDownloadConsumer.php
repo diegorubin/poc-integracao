@@ -2,9 +2,11 @@
 
 namespace Integracao;
 
+use FtpClient\FtpClient;
 use Integracao\Application\Commands\ExecuteDownloadFileFromFTP;
 use Integracao\Domain\File;
 use Integracao\Infrastructure\AMQPDownloadFileConsumer;
+use Integracao\Infrastructure\FTPFilesRepository;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 
 class FTPDownloadConsumer
@@ -17,6 +19,10 @@ class FTPDownloadConsumer
     {
         $this->config = Configuration::getInstance()->get();
 
+        // build dependencies
+        // FTP
+        $filesRepository = new FTPFilesRepository(new FtpClient());
+
         // Logger
         $this->logger = ApplicationLogger::getInstance();
 
@@ -26,7 +32,7 @@ class FTPDownloadConsumer
         $this->downloadFileConsumer = new AMQPDownloadFileConsumer($connection);
 
         // Command
-        $this->executeDownload = new ExecuteDownloadFileFromFTP($this->logger);
+        $this->executeDownload = new ExecuteDownloadFileFromFTP($filesRepository, $this->logger);
     }
     public function run()
     {

@@ -3,6 +3,7 @@
 use Integracao\Application\Commands\ExecuteDownloadFileFromFTP;
 use Integracao\ApplicationLogger;
 use Integracao\Domain\File;
+use Integracao\Domain\Repositories\FilesRepository;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -11,12 +12,14 @@ use PHPUnit\Framework\TestCase;
  */
 final class ExecuteDownloadFileFromFTPTest extends TestCase
 {
+    private $filesRepository;
     private $logger;
 
     protected function setUp(): void
     {
+        $this->filesRepository = $this->getMockBuilder(FilesRepository::class)->disableOriginalConstructor()->getMock();
         $this->logger = $this->getMockBuilder(ApplicationLogger::class)->disableOriginalConstructor()->getMock();
-        $this->filesDownloader = new ExecuteDownloadFileFromFTP($this->logger);
+        $this->filesDownloader = new ExecuteDownloadFileFromFTP($this->filesRepository, $this->logger);
     }
 
     public function testExecuteDownloadWithSuccess()
@@ -26,6 +29,8 @@ final class ExecuteDownloadFileFromFTPTest extends TestCase
             'fullpath' => 'a',
             'source' => 'b'
         ]]);
+
+        $this->filesRepository->expects($this->once())->method('download')->with('a', '/tmp/ftp-temp.integracao');
 
         $this->filesDownloader->execute($file);
     }

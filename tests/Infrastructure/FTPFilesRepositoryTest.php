@@ -30,4 +30,18 @@ final class FTPFilesRepositoryTest extends TestCase
         $this->assertEquals("dir/file", $file->getFullpath());
         $this->assertEquals("ftp", $file->getSource());
     }
+
+    public function testDownload()
+    {
+        $ftpClientStub = $this->getMockBuilder(FtpClient::class)->disableOriginalConstructor()->getMock();
+        $ftpClientStub->expects($this->once())->method('connect')->with('172.17.0.1');
+        $ftpClientStub->expects($this->once())->method('close')->with();
+        $ftpClientStub->expects($this->exactly(2))->method('__call')->with($this->logicalOr(
+            $this->equalTo('pasv', [true]),
+            $this->equalTo('get', [true])
+        ));
+        $fileRepository = new FTPFilesRepository($ftpClientStub);
+
+        $fileRepository->download('a', 'b');
+    }
 }
