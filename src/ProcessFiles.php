@@ -1,5 +1,7 @@
 <?php
 
+namespace Integracao;
+
 use Aws\S3\S3Client;
 use Integracao\Application\Commands\ProcessFile;
 use Integracao\ApplicationLogger;

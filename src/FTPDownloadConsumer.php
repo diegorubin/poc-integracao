@@ -7,6 +7,7 @@ use FtpClient\FtpClient;
 use Integracao\Application\Commands\ExecuteDownloadFile;
 use Integracao\Domain\File;
 use Integracao\Infrastructure\AMQPDownloadFileConsumer;
+use Integracao\Infrastructure\AMQPProcessFileProducer;
 use Integracao\Infrastructure\FTPFilesRepository;
 use Integracao\Infrastructure\S3SavedFilesRepository;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
@@ -28,10 +29,15 @@ class FTPDownloadConsumer
         // Logger
         $this->logger = ApplicationLogger::getInstance();
 
-        // Download Producer - AMQP
-        $amqp = $this->config['queues']['download'];
-        $connection = new AMQPStreamConnection($amqp['host'], $amqp['port'], $amqp['user'], $amqp['pass']);
-        $this->downloadFileConsumer = new AMQPDownloadFileConsumer($connection);
+        // Download Consumer - AMQP
+        $consumer = $this->config['queues']['download'];
+        $consumerConnection = new AMQPStreamConnection($consumer['host'], $consumer['port'], $consumer['user'], $consumer['pass']);
+        $this->downloadFileConsumer = new AMQPDownloadFileConsumer($consumerConnection);
+
+        // Process Producer - AMQP
+        $producer = $this->config['queues']['process'];
+        $producerConnection = new AMQPStreamConnection($producer['host'], $producer['port'], $producer['user'], $producer['pass']);
+        $processProducer = new AMQPProcessFileProducer($producerConnection);
 
         // Saved Files Repository
         $client = new S3Client([
@@ -47,7 +53,7 @@ class FTPDownloadConsumer
         $savedFilesRepository = new S3SavedFilesRepository($client);
 
         // Command
-        $this->executeDownload = new ExecuteDownloadFile($filesRepository, $savedFilesRepository, $this->logger);
+        $this->executeDownload = new ExecuteDownloadFile($filesRepository, $savedFilesRepository, $processProducer, $this->logger);
     }
     public function run()
     {

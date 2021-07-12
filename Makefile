@@ -5,10 +5,10 @@ build:
 	./phar-composer-1.2.0.phar build . dist/integracao
 
 build-image:
-	docker build -t docker.io/diegorubin/tex-integracao:0.8 .
+	docker build -t docker.io/diegorubin/tex-integracao:0.11 .
 
 push-image:
-	docker push docker.io/diegorubin/tex-integracao:0.8
+	docker push docker.io/diegorubin/tex-integracao:0.11
 
 test:
 	./vendor/bin/phpunit tests --coverage-html coverage
