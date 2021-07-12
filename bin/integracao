@@ -18,6 +18,11 @@ switch ($argv[1]) {
     $download = new Integracao\FTPDownloadConsumer();
     $download->run();
     break;
+  case "process-files":
+    Integracao\ApplicationLogger::getInstance()->info("starting process-files mode");
+    $process = new Integracao\ProcessFiles();
+    $process->run();
+    break;
   default:
     print "mode not available\n";
 }

@@ -4,16 +4,18 @@ namespace Integracao\Application\Commands;
 
 use Integracao\Domain\File;
 
-class ExecuteDownloadFileFromFTP
+class ExecuteDownloadFile
 {
     private $filesRepository;
     private $savedFilesRepository;
+    private $processFileProducer;
     private $logger;
 
-    public function __construct($filesRepository, $savedFilesRepository, $logger)
+    public function __construct($filesRepository, $savedFilesRepository, $processFileProducer, $logger)
     {
         $this->filesRepository = $filesRepository;
         $this->savedFilesRepository = $savedFilesRepository;
+        $this->processFileProducer = $processFileProducer;
         $this->logger = $logger;
     }
 
@@ -25,6 +27,8 @@ class ExecuteDownloadFileFromFTP
         $this->filesRepository->download($file->getFullpath(), $tmpFile);
 
         $this->savedFilesRepository->save($tmpFile, $file->getSource(), str_replace("/", "-", $file->getFullpath()));
+
+        $this->processFileProducer->publish($file);
 
         $this->logger->info("download from ftp finished!", ["file" => $file->attributes()]);
     }

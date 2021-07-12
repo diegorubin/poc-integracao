@@ -46,7 +46,17 @@ class Configuration
                     'routingKey' => $this->env('INTEGRACAO_DOWNLOAD_QUEUE_ROUTING_KEY', 'integracao'),
                     'user' => $this->env('INTEGRACAO_DOWNLOAD_QUEUE_USER', 'guest'),
                     'pass' => $this->env('INTEGRACAO_DOWNLOAD_QUEUE_PASS', 'guest')
+                ],
+                'process' => [
+                    'type' => $this->env('INTEGRACAO_PROCESS_QUEUE_TYPE', 'amqp'),
+                    'host' => $this->env('INTEGRACAO_PROCESS_QUEUE_HOST', 'localhost'),
+                    'port' => $this->env('INTEGRACAO_PROCESS_QUEUE_PORT', '5672'),
+                    'queueName' => $this->env('INTEGRACAO_PROCESS_QUEUE_NAME', 'process.file'),
+                    'routingKey' => $this->env('INTEGRACAO_PROCESS_QUEUE_ROUTING_KEY', ''),
+                    'user' => $this->env('INTEGRACAO_PROCESS_QUEUE_USER', 'guest'),
+                    'pass' => $this->env('INTEGRACAO_PROCESS_QUEUE_PASS', 'guest')
                 ]
+
             ]
         ];
     }

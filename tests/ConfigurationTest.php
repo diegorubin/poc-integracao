@@ -51,6 +51,15 @@ final class ConfigurationTest extends TestCase
                 'routingKey' => 'integracao',
                 'user' => 'guest',
                 'pass' => 'guest'
+            ],
+            'process' => [
+                'type' => 'amqp',
+                'host' => 'localhost',
+                'port' => '5672',
+                'queueName' => 'process.file',
+                'routingKey' => '',
+                'user' => 'guest',
+                'pass' => 'guest'
             ]
         ]);
     }
