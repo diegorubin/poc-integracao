@@ -1,5 +1,7 @@
 <?php
 
+namespace Integracao\Infrastructure;
+
 use Integracao\Configuration;
 use Integracao\Domain\File;
 use Integracao\Domain\Queues\ProcessFileConsumer;

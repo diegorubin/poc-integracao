@@ -26,7 +26,7 @@ class ExecuteDownloadFile
 
         $this->filesRepository->download($file->getFullpath(), $tmpFile);
 
-        $this->savedFilesRepository->save($tmpFile, $file->getSource(), str_replace("/", "-", $file->getFullpath()));
+        $this->savedFilesRepository->save($tmpFile, $file->getSource(), $file->getFullpath());
 
         $this->processFileProducer->publish($file);
 

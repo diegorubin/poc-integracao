@@ -4,7 +4,7 @@ namespace Integracao;
 
 use Aws\S3\S3Client;
 use FtpClient\FtpClient;
-use Integracao\Application\Commands\ExecuteDownloadFileFromFTP;
+use Integracao\Application\Commands\ExecuteDownloadFile;
 use Integracao\Domain\File;
 use Integracao\Infrastructure\AMQPDownloadFileConsumer;
 use Integracao\Infrastructure\FTPFilesRepository;
@@ -47,7 +47,7 @@ class FTPDownloadConsumer
         $savedFilesRepository = new S3SavedFilesRepository($client);
 
         // Command
-        $this->executeDownload = new ExecuteDownloadFileFromFTP($filesRepository, $savedFilesRepository, $this->logger);
+        $this->executeDownload = new ExecuteDownloadFile($filesRepository, $savedFilesRepository, $this->logger);
     }
     public function run()
     {

@@ -14,6 +14,7 @@
             <file>src/ApplicationLogger.php</file>
             <file>src/FTPDownloadConsumer.php</file>
             <file>src/FTPFilesRecover.php</file>
+            <file>src/ProcessFiles.php</file>
         </exclude>
     </coverage>
 </phpunit>

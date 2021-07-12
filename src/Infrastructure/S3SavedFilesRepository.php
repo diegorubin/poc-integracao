@@ -13,13 +13,28 @@ class S3SavedFilesRepository implements SavedFilesRepository
     {
         $this->client = $client;
     }
+
     public function save($file, $bucket, $key)
     {
         $this->client->putObject([
             'Bucket' => $bucket,
-            'Key' => $key,
+            'Key' => $this->normalizeKey($key),
             'Body' => fopen($file, 'r'),
             'ACL' => 'public-read'
         ]);
+    }
+
+    public function load($bucket, $key, $destiny)
+    {
+        $file = $this->client->getObject([
+            'Bucket' => $bucket,
+            'Key' => $this->normalizeKey($key),
+        ]);
+        file_put_contents($destiny, $file['Body']->getContents());
+    }
+
+    private function normalizeKey($key)
+    {
+        return str_replace("/", "-", $key);
     }
 }

@@ -37,7 +37,7 @@ final class ExecuteDownloadFileTest extends TestCase
         ]]);
 
         $this->filesRepository->expects($this->once())->method('download')->with('c/a', '/tmp/ftp-temp.integracao');
-        $this->savedFilesRepository->expects($this->once())->method('save')->with('/tmp/ftp-temp.integracao', 'b', 'c-a');
+        $this->savedFilesRepository->expects($this->once())->method('save')->with('/tmp/ftp-temp.integracao', 'b', 'c/a');
         $this->processFileProducer->expects($this->once())->method('publish')->with($file);
 
         $this->filesDownloader->execute($file);
