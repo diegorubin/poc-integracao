@@ -2,7 +2,9 @@
 
 namespace Integracao\Application\Commands;
 
+use Exception;
 use Integracao\Domain\File;
+use SimpleXMLElement;
 
 class ProcessFile
 {
@@ -20,10 +22,17 @@ class ProcessFile
         // TODO: generate random tmpfile name and remove after
         $tmpFile = "/tmp/process-temp.integracao";
 
-        $this->logger->info('processing file!', ['file' => $file]);
+        $this->logger->info('processing file!', ['file' => $file->attributes()]);
 
-        $this->savedFilesRepository->load($file->getSource(), $file->getFullpath(), $tmpFile);
+        try {
+            $this->savedFilesRepository->load($file->getSource(), $file->getFullpath(), $tmpFile);
 
-        $this->logger->info('file processed with success!', ['file' => $file]);
+            $fileContent = fread(fopen($tmpFile, "r"), filesize($tmpFile));
+            $content = new SimpleXMLElement($fileContent);
+
+            $this->logger->info('file processed with success!', ['file' => $file->attributes()]);
+        } catch (Exception $e) {
+            $this->logger->error('error on process file!', ['file' => $file->attributes(), 'exception' => $e->getMessage()]);
+        }
     }
 }

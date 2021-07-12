@@ -41,8 +41,8 @@ class ApplicationLogger
         $this->logger->info($message, $context);
     }
 
-    public function error($message)
+    public function error($message, $context=[])
     {
-        $this->logger->error($message);
+        $this->logger->error($message, $context);
     }
 }

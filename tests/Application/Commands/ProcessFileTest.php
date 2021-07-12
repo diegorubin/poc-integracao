@@ -24,6 +24,7 @@ final class ProcessFileTest extends TestCase
 
     public function testProcessFileWithSuccess()
     {
+        copy("tests/fixtures/file.xml", "/tmp/process-temp.integracao");
         $file = new File("c/a", "b");
         $this->savedFilesRepository->expects($this->once())->method('load')->with('b', 'c/a', '/tmp/process-temp.integracao');
         $this->logger->expects($this->exactly(2))->method('info')->with(
@@ -32,6 +33,16 @@ final class ProcessFileTest extends TestCase
                 $this->equalTo('file processed with success!', ['file' => ['fullpath' => 'c/a', 'source' => 'b']])
             )
         );
+        $this->processFile->execute($file);
+    }
+
+    public function testProcessFileWithError()
+    {
+        copy("tests/fixtures/file-invalid.xml", "/tmp/process-temp.integracao");
+        $file = new File("c/a", "b");
+        $this->savedFilesRepository->expects($this->once())->method('load')->with('b', 'c/a', '/tmp/process-temp.integracao');
+        $this->logger->expects($this->once())->method('info')->with('processing file!', ['file' => ['fullpath' => 'c/a', 'source' => 'b']]);
+        $this->logger->expects($this->once())->method('error')->with('error on process file!', ['file' => ['fullpath' => 'c/a', 'source' => 'b'], 'exception' => 'String could not be parsed as XML']);
         $this->processFile->execute($file);
     }
 }

@@ -34,7 +34,7 @@ class S3SavedFilesRepositoryTest extends TestCase
         $this->assertEquals($arguments[0]['Bucket'], 'bucket');
         $this->assertEquals($arguments[0]['Key'], 'key');
         $this->assertEquals($arguments[0]['ACL'], 'public-read');
-        $this->assertEquals(fread($arguments[0]['Body'], filesize('tests/fixtures/file.xml')), "content\n");
+        $this->assertEquals(fread($arguments[0]['Body'], filesize('tests/fixtures/file.xml')), "<?xml version='1.0' standalone='yes'?>\n<data>\n    <title>example</title>\n</data>\n");
     }
 
     public function testLoad()
