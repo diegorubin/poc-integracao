@@ -21,8 +21,9 @@ composer install
 docker-composer up
 ```
 
-## Build And Run
+After minio running, you should create `integracao` bucket.
 
+## Build And Run
 
 ```
 # build
