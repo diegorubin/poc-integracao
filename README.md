@@ -21,7 +21,7 @@ composer install
 docker-composer up
 ```
 
-After minio running, you should create `integracao` bucket.
+After minio running, you should create `integracao` bucket using user `minioadmin` and passwd `minioadmin`.
 
 ## Build And Run
 
